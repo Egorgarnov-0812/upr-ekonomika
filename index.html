@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>Управленческая экономика: конспект</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: одна колонка ~ 720px; липкая полоса вкладок; конспект = 4 «тетрадных» раздела, карточки = одна большая карточка + управление снизу */
+:root{
+  --bg:#EDF0EB; --paper:#F8FAF6; --ink:#1C2826; --muted:#5D6B67; --line:#D3DAD3;
+  --accent:#0E6B5A; --accent-soft:#D5EAE3; --mark:#F1D36B; --mark-ink:#3A3000;
+  --good:#2E7D4F; --bad:#B3452F; --c2:#B26A00;
+  --f-display:"Unbounded","Golos Text",system-ui,sans-serif;
+  --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111715; --paper:#18201D; --ink:#E2EAE6; --muted:#97A6A0; --line:#2B3632;
+  --accent:#52C7A8; --accent-soft:#1D3530; --mark:#E2C25A; --mark-ink:#2A2200;
+  --good:#5FC489; --bad:#E57C64; --c2:#E0A84A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111715; --paper:#18201D; --ink:#E2EAE6; --muted:#97A6A0; --line:#2B3632;
+  --accent:#52C7A8; --accent-soft:#1D3530; --mark:#E2C25A; --mark-ink:#2A2200;
+  --good:#5FC489; --bad:#E57C64; --c2:#E0A84A; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:760px;margin:0 auto}
+header.top{padding-block:28px 12px}
+.eyebrow{font:600 12px/1 var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(26px,6vw,38px)/1.1 var(--f-display);margin:10px 0 8px;text-wrap:balance;letter-spacing:-.01em}
+.lead{color:var(--muted);margin:0;max-width:62ch}
+
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);
+  display:flex;gap:8px;padding-block:12px;border-bottom:1px solid var(--line);margin-bottom:20px}
+.tab{flex:1;font:600 15px var(--f-body);padding:11px 12px;border-radius:10px;border:1px solid var(--line);
+  background:var(--paper);color:var(--ink);cursor:pointer}
+.tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.tab:focus-visible,button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid var(--mark);outline-offset:2px}
+
+/* ---------- Конспект ---------- */
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.toc a{font:500 14px var(--f-body);color:var(--accent);text-decoration:none;padding:6px 12px;border-radius:999px;background:var(--accent-soft)}
+section.lec{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px clamp(16px,4vw,28px);margin-bottom:22px;scroll-margin-top:84px}
+.lec-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-bottom:6px}
+.lec-no{font:700 13px var(--f-display);color:var(--accent)}
+.lec-date{font:500 13px var(--f-mono);color:var(--muted)}
+h2{font:700 clamp(19px,4.4vw,24px)/1.2 var(--f-display);margin:0 0 12px;text-wrap:balance}
+h3{font:600 13px var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:22px 0 10px}
+.gist{margin:0;padding-left:20px}
+.gist li{margin-bottom:4px}
+dl.terms{margin:0;display:grid;gap:12px}
+dl.terms div{display:grid;gap:2px}
+dt{font-weight:700}
+dd{margin:0;color:var(--ink)}
+dd .ex{color:var(--muted)}
+.formulas{display:grid;gap:10px}
+.fx{border-left:4px solid var(--mark);background:var(--bg);border-radius:0 10px 10px 0;padding:10px 14px;min-width:0}
+.fx code{display:block;font:600 15px/1.5 var(--f-mono);color:var(--ink);overflow-x:auto;white-space:nowrap}
+.fx span{display:block;font-size:14px;color:var(--muted);margin-top:2px}
+.note{font-size:13px;color:var(--muted);margin-top:14px}
+sub{font-size:.72em}
+
+/* ---------- Карточки ---------- */
+.deckbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chip{font:500 14px var(--f-body);padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.status{display:flex;justify-content:space-between;align-items:center;gap:12px;font:500 14px var(--f-mono);color:var(--muted);margin-bottom:10px;font-variant-numeric:tabular-nums}
+.bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin-bottom:16px}
+.bar i{display:block;height:100%;width:0;background:var(--good);transition:width .3s}
+.scene{perspective:1400px;cursor:pointer;user-select:none}
+.card{position:relative;min-height:300px;transition:transform .45s cubic-bezier(.3,.7,.2,1);transform-style:preserve-3d}
+.card.flipped{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:16px;border:1px solid var(--line);
+  background:var(--paper);padding:24px clamp(18px,5vw,32px);display:flex;flex-direction:column;justify-content:center;gap:12px;overflow:auto}
+.face.back{transform:rotateY(180deg);background:var(--accent-soft);border-color:var(--accent)}
+.face .tag{font:600 12px var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.face .tag b{color:var(--mark-ink);background:var(--mark);padding:2px 7px;border-radius:5px;margin-left:6px;letter-spacing:.04em}
+.face .q{font:700 clamp(19px,4.6vw,25px)/1.3 var(--f-display);text-wrap:balance}
+.face .a{font-size:17px;line-height:1.5}
+.face .a code{font:600 16px var(--f-mono);background:var(--paper);padding:2px 6px;border-radius:5px}
+.face .hint{font-size:13px;color:var(--muted);margin-top:auto}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.btn{font:600 15px var(--f-body);padding:13px 12px;border-radius:12px;border:1px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer}
+.btn.no{border-color:var(--bad);color:var(--bad)}
+.btn.yes{background:var(--good);border-color:var(--good);color:var(--paper)}
+.subcontrols{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.subcontrols .btn{flex:1;font-size:14px;padding:10px}
+.done{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:28px;text-align:center}
+.done h2{margin-bottom:6px}
+.keys{font-size:13px;color:var(--muted);margin-top:14px}
+kbd{font:500 12px var(--f-mono);border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:1px 5px;background:var(--paper)}
+/* ---------- Примеры, таблицы, графики ---------- */
+.examples{display:grid;gap:10px}
+.exm{border:1px solid var(--line);border-radius:10px;padding:11px 14px;min-width:0}
+.exm > b:first-child{display:block;margin-bottom:3px}
+.tw{overflow-x:auto;margin:8px 0}
+table.t{border-collapse:collapse;width:100%;font:13px/1.4 var(--f-mono);font-variant-numeric:tabular-nums}
+table.t th,table.t td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+table.t th{font-weight:600;color:var(--muted)}
+table.t th:first-child,table.t td:first-child{text-align:left}
+table.t td.hi{background:var(--accent-soft);font-weight:600}
+.cap{font-size:14px;color:var(--muted);margin:4px 0 10px;max-width:68ch}
+.chart{background:var(--bg);border-radius:12px;padding:6px;margin:6px 0}
+.chart svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+.chart text{fill:var(--muted);font:10.5px var(--f-mono)}
+.chart .g{stroke:var(--line);stroke-width:1}
+.chart .ax{stroke:var(--muted);stroke-width:1.2}
+.chart .ln{fill:none;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}
+.chart .dash{stroke-dasharray:5 4}
+.chart .pf{fill:var(--accent-soft)}
+.chart .pt{stroke:var(--bg);stroke-width:1.5}
+.chart .pl{fill:var(--ink);font-weight:600;font-size:12px}
+.chart .sl{font-weight:600;font-size:11.5px}
+.c-acc{stroke:var(--accent)} .c-c2{stroke:var(--c2)} .c-bad{stroke:var(--bad)} .c-ink{stroke:var(--ink)} .c-mut{stroke:var(--muted)}
+.d-acc{fill:var(--accent)} .d-c2{fill:var(--c2)} .d-bad{fill:var(--bad)} .d-ink{fill:var(--ink)} .d-mut{fill:var(--muted)}
+.chart .t-acc{fill:var(--accent)} .chart .t-c2{fill:var(--c2)} .chart .t-bad{fill:var(--bad)} .chart .t-ink{fill:var(--ink)} .chart .t-mut{fill:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px;color:var(--muted);margin:2px 0 10px}
+.legend i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
+.txbars{display:grid;gap:8px;margin:6px 0 4px}
+.txrow{display:grid;grid-template-columns:minmax(110px,30%) 1fr;gap:10px;align-items:center}
+.txrow > span{font-weight:600;font-size:14px}
+.txbar{background:var(--accent-soft);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;padding:5px 9px;font-size:13px;min-width:0}
+@media (max-width:520px){.txrow{grid-template-columns:1fr;gap:3px}}
+@media (prefers-reduced-motion: reduce){.card,.bar i{transition:none}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">ИТМО · Н. М. Логачёва · осень 2026</div>
+    <h1>Управленческая экономика</h1>
+    <p class="lead">Короткие конспекты четырёх лекций (15.09, 29.09, 13.10, 27.10) и карточки для запоминания терминов и формул.</p>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab" role="tab" id="tab-notes" aria-controls="notes" aria-selected="true">Конспект</button>
+    <button class="tab" role="tab" id="tab-cards" aria-controls="cards" aria-selected="false">Карточки</button>
+  </nav>
+
+  <!-- ================= КОНСПЕКТ ================= -->
+  <main id="notes" role="tabpanel" aria-labelledby="tab-notes">
+    <div class="toc">
+      <a href="#l1">1 · Введение и ресурсы</a>
+      <a href="#l2">2 · Транзакционные издержки</a>
+      <a href="#l3">3 · Производство</a>
+      <a href="#l4">4 · Издержки</a>
+    </div>
+
+    <section class="lec" id="l1">
+      <div class="lec-head"><span class="lec-no">ЛЕКЦИЯ 1</span><span class="lec-date">15.09.2026</span></div>
+      <h2>Предмет курса, ресурсы, потребности, создание бизнеса</h2>
+      <h3>Главное</h3>
+      <ul class="gist">
+        <li>Управленческая экономика — это применение экономической теории к реальным управленческим решениям.</li>
+        <li>Основа выбора — противоречие между <b>ограниченными ресурсами</b> и <b>потребностями</b>. Выбор отвечает на вопросы: что, сколько, для кого и как производить.</li>
+        <li>Бизнес нужно считать честно, без «пальм через полгода». Полюбите калькулятор.</li>
+      </ul>
+      <h3>Термины</h3>
+      <dl class="terms">
+        <div><dt>Экономические субъекты</dt><dd>Домохозяйства (потребляют, продают свои ресурсы, например труд), фирмы (цель — прибыль), государство (социальные функции, правила). Взаимодействуют на рынке ресурсов и рынке товаров и услуг.</dd></div>
+        <div><dt>Микро- и макроэкономика</dt><dd>Микро изучает отдельных субъектов (цены, спрос, производство фирмы). Макро смотрит на систему целиком: инфляция, ВВП, ключевая ставка ЦБ, сбережения. Предпринимателю нужны обе.</dd></div>
+        <div><dt>Институциональная среда</dt><dd>Совокупность институтов: правил, норм, ограничений и возможностей (законы, деловой этикет).</dd></div>
+        <div><dt>Теория сигналов</dt><dd>Внешний признак передаёт скрытую информацию. <span class="ex">Медаль говорит не об уме, а о целеустремлённости.</span></dd></div>
+        <div><dt>Ресурсы</dt><dd>Совокупность материальных благ и услуг, которые можно использовать для производства. <b>Свободные</b> имеют нулевую цену, <b>экономические</b> ограничены и покупаются. Ограниченность относительна: денег хватит на один бизнес и не хватит на другой.</dd></div>
+        <div><dt>5 факторов производства</dt><dd><b>Труд</b> — умственные и физические усилия. <b>Капитал</b> — реальный, а не деньги: здания, станки. <b>Земля</b> — все природные ресурсы, климат, расположение. <b>Предпринимательские способности</b> — генерировать идеи, реализовывать их и брать риск. <b>Информация</b> — знание, обладающее новизной; должна быть своевременной, проверенной и понятной.</dd></div>
+        <div><dt>Факторные доходы</dt><dd>Труд → заработная плата; капитал → процент; земля → рента (аренда); предпринимательство → прибыль (не гарантирована); информация → доход, например от консалтинга.</dd></div>
+        <div><dt>Потребность</dt><dd>Состояние нужды и необходимость его преодолеть: «нет и хочу» или «есть и хочу сохранить».</dd></div>
+        <div><dt>Классификации потребностей</dt><dd>Первичные / вторичные (вторичные появляются после удовлетворения первичной: квартира → мебель, посуда); безусловные / обусловленные (дресс-код); высшие / низшие; положительные / отрицательные; неотложные / отсроченные; общие / особенные; обычные / чрезвычайные; частные / государственные. Плюс пирамида Маслоу: чем ниже уровень, тем шире аудитория и проще продать.</dd></div>
+        <div><dt>Альтернативные издержки</dt><dd>То, от чего мы отказываемся, делая выбор, то есть ценность лучшей упущенной альтернативы.</dd></div>
+        <div><dt>Кривая производственных возможностей (КПВ)</dt><dd>Граница максимального выпуска двух благ при данных ресурсах и технологии. Допущения: ресурсы ограничены, технология задана, экономика закрыта. Точка на кривой — эффективно; внутри (N) — ресурсы простаивают; за кривой (M) — недостижимо.</dd></div>
+        <div><dt>Стартап и классический бизнес</dt><dd>Стартап — новая идея, неустойчивая бизнес-модель, нужен взрывной рост (×2, ×3) и инвестиции. Классический бизнес развивается постепенно и стабильно, часто как семейный.</dd></div>
+        <div><dt>Структура и инфраструктура рынка</dt><dd>Структура — внутреннее устройство рынка. Инфраструктура — посредники и сервисы: банки, консалтинг, юристы, фонды, акселераторы, платформа МСП.</dd></div>
+        <div><dt>Предприятие и организация</dt><dd>Предприятие — имущественный комплекс для получения прибыли. Организация может существовать ради социального эффекта.</dd></div>
+        <div><dt>Категории МСП (ФЗ о развитии МСП)</dt><dd>Микро, малое, среднее, крупное — по доходу и численности. У IT-компаний свои правила: статус МТК (малой технологической компании) через Минцифры; деление на стартап, раннюю и зрелую компании по выручке, а не по возрасту.</dd></div>
+        <div><dt>Шаги создания бизнеса</dt><dd>Выбор ОПФ (начинать проще с ИП; ИП отвечает всем своим имуществом) → госрегистрация с правильным ОКВЭД (от него зависят льготы) → выбор налогового режима → расчётный счёт (смотреть скрытые платежи; крупные банки или специализированные).</dd></div>
+      </dl>
+      <h3>Формулы</h3>
+      <div class="formulas">
+        <div class="fx"><code>УСН «Доходы»: Налог = 6% × Д</code><span>Д — доходы</span></div>
+        <div class="fx"><code>УСН «Доходы − расходы»: Налог = 15% × (Д − Р)</code><span>Выгоднее, когда расходы большие</span></div>
+        <div class="fx"><code>0,06·Д = 0,15·(Д − Р)  ⇒  Р = 60% Д</code><span>Расходы больше 60% доходов — выгоднее 15%, меньше — 6%. Это мой расчёт для ориентира, на лекции его не выводили.</span></div>
+      </div>
+      <h3>Примеры</h3>
+      <div class="examples">
+        <div class="exm"><b>Альтернативные издержки</b>Вы учитесь очно, а не работаете курьером за 40 000 ₽ в месяц. Альтернативные издержки учёбы — эти 40 000 ₽ упущенного дохода. Так же со стартапом: запуская его, вы теряете заработок в найме, а уходя в найм — шанс быстро вырастить стартап.</div>
+        <div class="exm"><b>Первичные и вторичные потребности</b>Застройщик закрывает первичную потребность в жилье, мебельная фабрика — вторичную. Поэтому застройщик для фабрики не конкурент, а партнёр: он «поставляет» ей покупателей.</div>
+        <div class="exm"><b>Неотложная и отсроченная потребность</b>Кофе у выхода из метро покупают сразу, специально его никто не ищет, так что решает место. Консультанта по диссертации выбирают неделями: сравнивают, созваниваются. Здесь решают репутация и длинный путь продажи.</div>
+        <div class="exm"><b>Факторные доходы</b>Работаете по найму — получаете зарплату. Сдаёте в аренду свой фургон или станок — процент на капитал. Сдаёте участок у моря — ренту. Открыли своё дело — прибыль, но без гарантии. Консультируете — доход от информации.</div>
+        <div class="exm"><b>Какую УСН выбрать</b>Доходы ИП за год 1 000 000 ₽, расходы 700 000 ₽ (70%). «Доходы»: 6% × 1 000 000 = <b>60 000 ₽</b>. «Доходы − расходы»: 15% × 300 000 = <b>45 000 ₽</b>, значит выгоднее 15%. При расходах 300 000 ₽ налог по 15% вырос бы до 105 000 ₽, и выгоднее стала бы ставка 6%.</div>
+      </div>
+      <h3>График: кривая производственных возможностей</h3>
+      <p class="cap">Кондитерская за день печёт торты, пирожные или их сочетание. Цифры условные.</p>
+      <div class="chart" id="ch-kpv"></div>
+      <div class="legend"><span><i style="background:var(--accent)"></i>A, B — на кривой: ресурсы загружены полностью</span><span><i style="background:var(--c2)"></i>N — внутри: ресурсы простаивают</span><span><i style="background:var(--bad)"></i>M — за кривой: недостижимо</span></div>
+      <div class="tw"><table class="t">
+        <tr><th>Переход по кривой</th><th>+ тортов</th><th>− пирожных</th><th>Цена 1 торта</th></tr>
+        <tr><td>0 → 9 тортов</td><td>9</td><td>12</td><td>1,3 пирожного</td></tr>
+        <tr><td>9 → 12 (A → B)</td><td>3</td><td>12</td><td>4 пирожных</td></tr>
+        <tr><td>12 → 15</td><td>3</td><td>36</td><td class="hi">12 пирожных</td></tr>
+      </table></div>
+      <p class="cap">Каждый следующий торт обходится дороже: альтернативные издержки растут, поэтому кривая выгнута наружу. Как с конфетами: из десяти одну отдать легко, последнюю жалко.</p>
+    </section>
+
+    <section class="lec" id="l2">
+      <div class="lec-head"><span class="lec-no">ЛЕКЦИЯ 2</span><span class="lec-date">29.09.2026</span></div>
+      <h2>Проблема координации выбора: транзакционные издержки, рынок, бизнес-план</h2>
+      <h3>Главное</h3>
+      <ul class="gist">
+        <li>Любая сделка, даже покупка хлеба с чеком, несёт транзакционные издержки. Они растут с масштабом сделки.</li>
+        <li>Транзакционные издержки нельзя срезать до нуля: экономия на проверке (например, документов на квартиру) оборачивается проблемами.</li>
+        <li>Управленец видит систему связей, а не отдельные факты, и проверяет свои убеждения.</li>
+      </ul>
+      <h3>Термины</h3>
+      <dl class="terms">
+        <div><dt>Транзакционные издержки</dt><dd>Издержки, возникающие при заключении любой сделки. Ввёл <b>Рональд Коуз</b>; до него сделка была «чёрным ящиком». Величина зависит от размера сделки, а не от товара. <span class="ex">Пакет молока в магазине и партия молока для торговой сети.</span></dd></div>
+        <div><dt>Виды транзакционных издержек</dt><dd>1) поиск информации (цена, поставщик, условия, логистика); 2) спецификация и защита прав собственности (уполномочен ли контрагент, чистые ли документы); 3) измерение качества (анализ молока, оценка недвижимости); 4) ведение переговоров и заключение контракта (юристы, договоры, пользовательские соглашения); 5) контроль исполнения и защита от оппортунизма. Отдельно упоминались коррупционные риски.</dd></div>
+        <div><dt>Оппортунистическое поведение</dt><dd>Недобросовестное преследование своих интересов в ущерб другой стороне сделки. Неизбежно, потому что интересы сторон расходятся. Снижают риск испытательный срок, поэтапные контракты и проверка выполнения обязательств.</dd></div>
+        <div><dt>Ошибки управленческого мышления</dt><dd>Когнитивные искажения, ложные причинно-следственные связи, перенос локальных наблюдений на всю экономику (личная инфляция ≠ официальная), путаница терминов. <span class="ex">Снижение ключевой ставки выгодно бизнесу в моменте, но может ухудшить общую ситуацию.</span></dd></div>
+        <div><dt>Бизнес-план</dt><dd>Документ о способности компании создавать и продавать продукцию и об ожидаемой прибыли. Структура: идея и цели, описание бизнеса, оценка отрасли, маркетинг, производство, финансовый план. Нужен для инвесторов, но не гарантирует успеха. Начинайте с грубой оценки и уточняйте по ходу.</dd></div>
+        <div><dt>Базовые вопросы бизнеса</dt><dd>Что производить? Где? Для кого? Как?</dd></div>
+        <div><dt>Товар и услуга</dt><dd>Товар можно хранить. Услуга потребляется в момент оказания.</dd></div>
+        <div><dt>Границы рынка</dt><dd>Продуктовые, географические и институциональные.</dd></div>
+        <div><dt>УТП</dt><dd>Уникальное торговое предложение. Строится на детальном понимании потребностей клиента и стратегий конкурентов. <span class="ex">Женский фитнес-зал как ниша.</span></dd></div>
+        <div><dt>Социальное предпринимательство</dt><dd>Бизнес, который нанимает уязвимые группы, производит товары для них или решает социальные проблемы. Даёт налоговые и иные льготы. <span class="ex">Робот для детей с аутизмом.</span></dd></div>
+      </dl>
+      <h3>Примеры</h3>
+      <div class="examples">
+        <div class="exm"><b>Поиск информации</b>У бабушки много свободного времени, и она обходит три магазина ради 30 ₽ экономии. Занятому человеку его время дороже, и он купит в ближайшем. Торговая сеть, закупающая молоко, проводит тендер и сравнивает десятки поставщиков.</div>
+        <div class="exm"><b>Спецификация прав собственности</b>Перед покупкой квартиры проверяют выписку ЕГРН: все ли собственники согласны на продажу и есть ли у представителя продавца доверенность. Иначе сделку могут признать недействительной.</div>
+        <div class="exm"><b>Измерение качества</b>У пакета молока смотрим срок годности. На партию для сети заказываем лабораторный анализ жирности. Квартиру осматриваем вместе со специалистом по коммуникациям.</div>
+        <div class="exm"><b>Оппортунизм и защита от него</b>Кандидат на собеседовании приукрасил опыт, поэтому вводят испытательный срок. Подрядчик взял 100% предоплаты и тянет сроки, поэтому в следующий раз платят поэтапно, 30 / 40 / 30%, проверяя каждый этап.</div>
+        <div class="exm"><b>Заключение договора</b>Студенческое приложение собирает данные пользователей. Значит, нужны пользовательское соглашение и чекбокс согласия на обработку персональных данных, а для них нужен юрист. Это тоже транзакционные издержки.</div>
+        <div class="exm"><b>Границы рынка: женский фитнес-зал</b>Продуктовые: фитнес только для женщин. Географические: жилой район в 10–15 минутах ходьбы. Институциональные: правила, по которым приходится работать (договор-оферта, санитарные нормы, лицензия на медицинские услуги, если они есть).</div>
+        <div class="exm"><b>Товар или услуга</b>Торт можно испечь заранее и хранить в витрине. Стрижку «про запас» не сделать: услугу потребляют в момент оказания.</div>
+      </div>
+      <h3>Схема: транзакционные издержки растут с масштабом сделки</h3>
+      <p class="cap">Чем крупнее и сложнее сделка, тем больше шагов и специалистов она требует. Длина полосы условная.</p>
+      <div class="txbars">
+        <div class="txrow"><span>Булка хлеба</span><div class="txbar" style="width:22%">чек</div></div>
+        <div class="txrow"><span>Смартфон</span><div class="txbar" style="width:42%">сравнить цены, отзывы, гарантия</div></div>
+        <div class="txrow"><span>Подержанное авто</span><div class="txbar" style="width:64%">история, диагностика, договор, проверка залога</div></div>
+        <div class="txrow"><span>Квартира</span><div class="txbar" style="width:84%">риэлтор, выписка ЕГРН, юрист, безопасный расчёт</div></div>
+        <div class="txrow"><span>Партия молока для сети</span><div class="txbar" style="width:100%">тендер, лабораторный анализ, контракт, контроль поставок, страховка</div></div>
+      </div>
+    </section>
+
+    <section class="lec" id="l3">
+      <div class="lec-head"><span class="lec-no">ЛЕКЦИЯ 3</span><span class="lec-date">13.10.2026</span></div>
+      <h2>Производство: производственная функция, отдача, изокванты</h2>
+      <h3>Главное</h3>
+      <ul class="gist">
+        <li>Клиент покупает ценность, а не форму: полуфабрикат — это экономия времени.</li>
+        <li>Технология — инструмент, а не цель. Ручной труд может быть преимуществом.</li>
+        <li>Масштабирование — это не «умножить всё на 5» (пример с тортом: пятая печь не нужна).</li>
+        <li>Автоматизируйте и наладьте процессы <b>до</b> масштабирования. Малый бизнес не обязан становиться крупным.</li>
+        <li>Человека нельзя заменить «один к одному», как станок: нужны обучение, адаптация, совпадение ценностей.</li>
+      </ul>
+      <h3>Термины</h3>
+      <dl class="terms">
+        <div><dt>Эффективность</dt><dd>Максимальный результат при минимальных затратах (соотношение результата и затрат).</dd></div>
+        <div><dt>Производственная функция</dt><dd>Зависимость максимального выпуска от количества используемых ресурсов («рецепт»). Ресурсы бывают абсолютно необходимыми (человек, хотя бы нажать кнопку) и относительно необходимыми, то есть заменяемыми.</dd></div>
+        <div><dt>Отдача от масштаба</dt><dd>Реакция выпуска на изменение всех ресурсов в n раз. <b>Постоянная</b>: выпуск растёт в n раз. <b>Возрастающая</b>: больше чем в n раз (металлургия, автопром, сети). <b>Убывающая</b>: меньше чем в n раз (ресурсы ×7, выпуск ×5).</dd></div>
+        <div><dt>Постоянные и переменные факторы</dt><dd>Постоянные не зависят от объёма выпуска в течение периода (печь, оборудование). Переменные меняются вместе с выпуском (труд, сырьё).</dd></div>
+        <div><dt>Краткосрочный и долгосрочный период</dt><dd>Это не календарь. В краткосрочном часть факторов постоянна: новое оборудование не купить и не наладить мгновенно. В долгосрочном все факторы переменные. Длина периода зависит от отрасли: у кофейни — 2 недели, у завода датчиков — месяцы.</dd></div>
+        <div><dt>TP, AP, MP</dt><dd><b>Общий продукт</b> — весь объём выпуска (отдача от всех). <b>Средний</b> — выпуск на единицу переменного фактора (от каждого). <b>Предельный</b> — прирост выпуска от ещё одной единицы фактора (от дополнительно нанятого). Решение «нанять или нет» принимают по MP.</dd></div>
+        <div><dt>Закон убывающей предельной производительности</dt><dd>Если наращивать переменный фактор при неизменных остальных, после некоторой точки отдача от каждой дополнительной единицы снижается, а потом может стать отрицательной. <span class="ex">Пример с покраской пола: 3 друга на 3 кисти и 3 банки краски — максимум; 10 друзей затаптывают свежий пол.</span></dd></div>
+        <div><dt>Изокванта</dt><dd>Линия комбинаций труда (L) и капитала (K), дающих один и тот же объём выпуска. Дальняя от начала координат изокванта означает больший выпуск.</dd></div>
+        <div><dt>MRTS</dt><dd>Предельная норма технологического замещения капитала трудом: от скольких единиц капитала надо отказаться, чтобы увеличить труд на единицу при том же выпуске. Показывает, насколько ресурсы взаимозаменяемы.</dd></div>
+        <div><dt>Изокоста</dt><dd>Линия комбинаций ресурсов, которые фирма может купить на заданную сумму (финансовое ограничение). Точки внутри — деньги остаются неиспользованными.</dd></div>
+        <div><dt>Равновесие производителя</dt><dd>Точка касания изокванты и изокосты: план выпуска совпадает с финансовыми возможностями. Цены ресурсов (и ставка по кредитам) определяют, по карману ли автоматизация.</dd></div>
+        <div><dt>Три параметра производства</dt><dd>Качество, сроки и бюджет. Сначала фиксируют их, потом подбирают ресурсы.</dd></div>
+      </dl>
+      <h3>Формулы</h3>
+      <div class="formulas">
+        <div class="fx"><code>Q = f(L, K)</code><span>Производственная функция: выпуск от труда и капитала</span></div>
+        <div class="fx"><code>AP = TP / L</code><span>Средний продукт. Пример: 100 ед. / 10 чел. = 10</span></div>
+        <div class="fx"><code>MP = ΔTP / ΔL</code><span>Предельный продукт: прирост выпуска от +1 работника</span></div>
+        <div class="fx"><code>MRTS<sub>LK</sub> = −ΔK / ΔL = MP<sub>L</sub> / MP<sub>K</sub></code><span>Норма замещения капитала трудом</span></div>
+        <div class="fx"><code>TC = P<sub>L</sub>·L + P<sub>K</sub>·K</code><span>Изокоста. Крайние точки: L = TC/P<sub>L</sub> (только люди), K = TC/P<sub>K</sub> (только оборудование)</span></div>
+        <div class="fx"><code>MRTS<sub>LK</sub> = P<sub>L</sub> / P<sub>K</sub></code><span>Условие равновесия производителя (касание изокванты и изокосты)</span></div>
+        <div class="fx"><code>ресурсы ×n → выпуск ×n | &gt;n | &lt;n</code><span>Постоянная | возрастающая | убывающая отдача от масштаба</span></div>
+      </div>
+      <h3>Примеры</h3>
+      <div class="examples">
+        <div class="exm"><b>Отдача от масштаба</b>2 кондитера и 1 печь дают 40 тортов в день. Ресурсы удвоили: 4 кондитера и 2 печи. Если тортов стало 80, отдача <b>постоянная</b>. Если 100 (разделение труда: один месит, другой украшает), <b>возрастающая</b>. Если 70 (на кухне тесно, все мешают друг другу), <b>убывающая</b>.</div>
+        <div class="exm"><b>Короткий и длинный период</b>У кофейни у парка в день фестиваля очередь. В коротком периоде меняют переменные факторы: зовут ещё одного бариста, сокращают меню до быстрых напитков. Если фестивали стали еженедельными, это задача долгосрочного периода: расширить зал или открыть точку у другого входа.</div>
+        <div class="exm"><b>Заменимые и незаменимые ресурсы</b>Тесто можно месить руками или миксером: ресурсы взаимозаменяемы. Печь заменить нечем. Даже на почти полностью автоматизированном заводе нужен человек, который следит за процессом.</div>
+        <div class="exm"><b>Средний и предельный продукт</b>10 работников выпускают 100 единиц: AP = 100 / 10 = 10. Наняли одиннадцатого, выпуск стал 106: MP = 106 − 100 = 6, AP = 106 / 11 ≈ 9,6. Новичок добавил меньше среднего, поэтому средний продукт упал.</div>
+        <div class="exm"><b>Автоматизировать или нанять?</b>Один станок заменяет 3 работников при том же выпуске, значит MRTS = 1/3. Работник стоит 50 тыс ₽ в месяц, аренда станка — 100 тыс ₽, P<sub>L</sub>/P<sub>K</sub> = 1/2. Станок за 100 тыс дешевле трёх людей за 150 тыс: выгоднее капитал. Подорожают кредиты или станки — расчёт изменится.</div>
+      </div>
+
+      <h3>График: общий, средний и предельный продукт</h3>
+      <p class="cap">Красим пол 50 м². Постоянные факторы — 3 кисти и 3 банки краски, переменный фактор — друзья, которые пришли помочь. Цифры условные, TP — покрашенные м² за 2 часа.</p>
+      <div class="tw"><table class="t">
+        <tr><th>Друзей, L</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
+        <tr><td>TP, м²</td><td>0</td><td>8</td><td>21</td><td>35</td><td>44</td><td>49</td><td class="hi">50</td><td>48</td><td>43</td></tr>
+        <tr><td>MP = ΔTP/ΔL</td><td>—</td><td>8</td><td>13</td><td class="hi">14</td><td>9</td><td>5</td><td>1</td><td>−2</td><td>−5</td></tr>
+        <tr><td>AP = TP/L</td><td>—</td><td>8</td><td>10,5</td><td class="hi">11,7</td><td>11</td><td>9,8</td><td>8,3</td><td>6,9</td><td>5,4</td></tr>
+      </table></div>
+      <div class="chart" id="ch-tp"></div>
+      <div class="chart" id="ch-apmp"></div>
+      <div class="legend"><span><i style="background:var(--accent)"></i>TP — общий продукт</span><span><i style="background:var(--bad)"></i>MP — предельный</span><span><i style="background:var(--c2)"></i>AP — средний</span></div>
+      <p class="cap"><b>1–3 друга:</b> каждому хватает кисти, MP растёт. <b>4–6:</b> кистей не хватает, работают по очереди, и MP падает, хотя ещё положителен. Как только MP опускается ниже AP, средний продукт тоже начинает падать. <b>7 и больше:</b> MP отрицателен, лишние люди затаптывают свежий пол, и TP снижается. TP максимален там, где MP ≈ 0.</p>
+
+      <h3>График: изокванта и изокоста</h3>
+      <p class="cap">Цех: работник стоит P<sub>L</sub> = 50 тыс ₽ в месяц, аренда станка P<sub>K</sub> = 100 тыс ₽, бюджет TC = 1 млн ₽. Изокоста: 50·L + 100·K = 1000.</p>
+      <div class="chart" id="ch-iso"></div>
+      <div class="legend"><span><i style="background:var(--ink)"></i>изокоста (бюджет)</span><span><i style="background:var(--accent)"></i>Q₂ — изокванта, которой касается бюджет</span><span><i style="background:var(--muted)"></i>Q₁ — меньший выпуск, Q₃ — недостижимый</span></div>
+      <p class="cap">Если всё потратить на людей, хватит на 20 человек (1000 / 50); если на станки — на 10 (1000 / 100). Оптимум <b>E</b> — 10 работников и 5 станков: там изокванта Q₂ касается изокосты, и MRTS = P<sub>L</sub>/P<sub>K</sub> = 0,5. Точки в закрашенной области доступны, но часть денег остаётся неиспользованной. Изокванта Q₃ при таком бюджете недостижима.</p>
+    </section>
+
+    <section class="lec" id="l4">
+      <div class="lec-head"><span class="lec-no">ЛЕКЦИЯ 4</span><span class="lec-date">27.10.2026</span></div>
+      <h2>Издержки: подходы, виды, короткий и длинный период</h2>
+      <h3>Главное</h3>
+      <ul class="gist">
+        <li>Управленческие задачи бывают <b>стратегическими</b> (выбор деятельности, уровень безубыточности, выгодно ли расширяться, эффективность подразделений) и <b>техническими</b> (себестоимость единицы).</li>
+        <li>Решения принимают на основе данных, а не потому что «конкуренты расширяются».</li>
+        <li>Главная ошибка новичка — не видеть неявные издержки, например работать на себя «бесплатно».</li>
+        <li>При расширении следите прежде всего за <b>переменными</b> издержками: после определённой точки они резко растут.</li>
+        <li>Четыре принципа: 1) невозвратные издержки не учитываем; 2) считаем экономическую, а не бухгалтерскую прибыль; 3) учитываем альтернативные издержки и будущие затраты (обслуживание станка); 4) выбирая масштаб, смотрим на долгосрочные средние издержки.</li>
+        <li>Как снижать издержки: аутсорсинг, ИИ-автоматизация, гибридный формат работы, пересмотр закупок, ревизия штата и маркетинговых каналов.</li>
+      </ul>
+      <h3>Термины</h3>
+      <dl class="terms">
+        <div><dt>Издержки</dt><dd>Затраты в денежной форме.</dd></div>
+        <div><dt>Точка безубыточности</dt><dd>Минимальный объём продаж, при котором выручка покрывает все затраты. Не достигнуть её ещё не значит, что надо уходить с рынка (подробно на следующей лекции).</dd></div>
+        <div><dt>Бухгалтерские (явные, внешние) издержки</dt><dd>Плата за ресурсы, не принадлежащие фирме. Подтверждены документами, видны в отчётности.</dd></div>
+        <div><dt>Прямые и косвенные издержки</dt><dd><b>Прямые</b> (основные, технологические) непосредственно создают результат: сырьё, материалы, топливо, энергия, оплата труда, соцотчисления. <b>Косвенные</b> (накладные, организационные) результат не создают, но без них нельзя: администрация, реклама, юристы, аренда, платежи по кредиту. Отнесение зависит от вида деятельности: в бухгалтерской фирме зарплата бухгалтера — прямые.</dd></div>
+        <div><dt>Неявные (внутренние) издержки</dt><dd>Упущенный доход от использования собственных ресурсов: своего труда без зарплаты, своей квартиры, стартового капитала, который можно было вложить иначе.</dd></div>
+        <div><dt>Экономические издержки</dt><dd>Явные плюс неявные. По ним оценивают выгодность решения.</dd></div>
+        <div><dt>Постоянные издержки (FC)</dt><dd>Не зависят от объёма выпуска и есть даже при нулевом выпуске (аренда, фиксированная часть коммуналки). На графике — горизонтальная линия.</dd></div>
+        <div><dt>Переменные издержки (VC)</dt><dd>Зависят от объёма: сырьё, сдельная зарплата, коммуналка по счётчику. Сначала растут быстро, потом полого, после точки убывающей отдачи — резко вверх.</dd></div>
+        <div><dt>Средние издержки (ATC)</dt><dd>Себестоимость единицы продукции. Это не цена: цену фирма часто не контролирует, а себестоимость — управляемая величина. AFC убывает с ростом выпуска (FC размазываются на большее число единиц); AVC может расти, например при смене фасовки закупок.</dd></div>
+        <div><dt>Предельные издержки (MC)</dt><dd>Прирост затрат при выпуске одной дополнительной единицы. Растут из-за закона убывающей предельной производительности. <span class="ex">Начинка конфет: +1 кг выпуска требует многократного роста затрат на многокомпонентный состав.</span></dd></div>
+        <div><dt>Долгосрочный период</dt><dd>Все издержки переменные, кривые сглаживаются. Прибыльный рынок привлекает новых игроков, ёмкость рынка не растёт, и прибыль размывается. «Купить оборудование» на деле — это поиск, сделка, логистика, страховка, растаможка, установка, пусконаладка.</dd></div>
+        <div><dt>Невозвратные издержки</dt><dd>Затраты, которые нельзя вернуть: регистрация, спецоборудование, вывеска, дизайн помещения. Это как плата за вход на рынок; в решениях их не учитывают. <span class="ex">Неудачная игра Glitch → Slack; YouDo из развлечений превратился в сервис поиска исполнителей.</span></dd></div>
+        <div><dt>Когда нужен ребрендинг</dt><dd>1) принудительно из-за юридических ограничений на название; 2) чтобы разделить аудитории (премиум и массовый сегмент); 3) при смене стратегии.</dd></div>
+      </dl>
+      <h3>Формулы</h3>
+      <div class="formulas">
+        <div class="fx"><code>TC = FC + VC</code><span>Общие издержки; на графике TC — это VC, поднятая на величину FC</span></div>
+        <div class="fx"><code>ATC = TC / Q = AFC + AVC</code><span>Себестоимость единицы</span></div>
+        <div class="fx"><code>AFC = FC / Q    AVC = VC / Q</code><span>Средние постоянные (убывают) и средние переменные</span></div>
+        <div class="fx"><code>MC = ΔTC / ΔQ = ΔVC / ΔQ</code><span>Предельные издержки (FC не меняются, поэтому Δ одна и та же)</span></div>
+        <div class="fx"><code>Экономические = явные + неявные</code><span>Явные = бухгалтерские</span></div>
+        <div class="fx"><code>Бух. прибыль = TR − явные</code><span>TR — выручка</span></div>
+        <div class="fx"><code>Экон. прибыль = TR − явные − неявные</code><span>По ней оценивают решения</span></div>
+        <div class="fx"><code>Q<sub>б/у</sub> = FC / (P − AVC)</code><span>Точка безубыточности в штуках. Забегаю вперёд: формулу дадут на следующей лекции</span></div>
+      </div>
+      <h3>Примеры</h3>
+      <div class="examples">
+        <div class="exm"><b>Бухгалтерская и экономическая прибыль</b>Кофейня за год: выручка 3 000 тыс ₽, явные издержки (аренда, зерно, зарплаты) 2 400 тыс ₽. Бухгалтерская прибыль <b>600 тыс ₽</b>, на бумаге всё хорошо. Неявные издержки: собственник мог бы работать управляющим за 60 тыс ₽ в месяц (720 тыс в год), а свой стартовый 1 млн ₽ положить на вклад под 16% (160 тыс в год). Итого 880 тыс. Экономическая прибыль: 600 − 880 = <b>−280 тыс ₽</b>. По сравнению с альтернативой бизнес невыгоден.</div>
+        <div class="exm"><b>Прямые и косвенные издержки пекарни</b>Прямые: мука, яйца, электричество печей, зарплата пекарей. Косвенные: бухгалтер, реклама, аренда, проценты по кредиту. В бухгалтерской фирме зарплата бухгалтера уже прямые издержки: он и есть продукт.</div>
+        <div class="exm"><b>Почему AVC может расти</b>Пекарня расширилась, и мука, которую раньше брали мешками, теперь нужна в другом объёме и фасовке. Логистика, хранение и порча могут поднять затраты на единицу, даже если выпуск растёт.</div>
+        <div class="exm"><b>Невозвратные издержки</b>На полную версию приложения уже потратили 2 млн ₽. Чтобы доделать, нужно ещё 1,5 млн ₽, а дополнительная выручка от полной версии — около 1 млн ₽. Сравниваем только будущее: 1 млн &lt; 1,5 млн, значит не доделываем, а переориентируем наработки. Потраченные 2 млн в расчёт не идут.</div>
+        <div class="exm"><b>Точка безубыточности</b>Постоянные издержки кофейни 100 тыс ₽ в месяц, цена чашки 150 ₽, переменные издержки на чашку 50 ₽. Q = 100 000 / (150 − 50) = <b>1 000 чашек в месяц</b>, около 34 в день.</div>
+      </div>
+
+      <h3>Расчёт: издержки кофейни</h3>
+      <p class="cap">Q — тыс. чашек в месяц, FC, VC, TC — тыс ₽. Средние и предельные издержки получаются в рублях за чашку. Цифры условные.</p>
+      <div class="tw"><table class="t">
+        <tr><th>Q</th><th>FC</th><th>VC</th><th>TC</th><th>AFC</th><th>AVC</th><th>ATC</th><th>MC</th></tr>
+        <tr><td>0</td><td>100</td><td>0</td><td>100</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>1</td><td>100</td><td>50</td><td>150</td><td>100</td><td>50</td><td>150</td><td>50</td></tr>
+        <tr><td>2</td><td>100</td><td>90</td><td>190</td><td>50</td><td>45</td><td>95</td><td>40</td></tr>
+        <tr><td>3</td><td>100</td><td>120</td><td>220</td><td>33,3</td><td>40</td><td>73,3</td><td>30</td></tr>
+        <tr><td>4</td><td>100</td><td>145</td><td>245</td><td>25</td><td>36,3</td><td>61,3</td><td class="hi">25</td></tr>
+        <tr><td>5</td><td>100</td><td>175</td><td>275</td><td>20</td><td class="hi">35</td><td>55</td><td>30</td></tr>
+        <tr><td>6</td><td>100</td><td>215</td><td>315</td><td>16,7</td><td>35,8</td><td class="hi">52,5</td><td>40</td></tr>
+        <tr><td>7</td><td>100</td><td>270</td><td>370</td><td>14,3</td><td>38,6</td><td>52,9</td><td>55</td></tr>
+        <tr><td>8</td><td>100</td><td>345</td><td>445</td><td>12,5</td><td>43,1</td><td>55,6</td><td>75</td></tr>
+        <tr><td>9</td><td>100</td><td>445</td><td>545</td><td>11,1</td><td>49,4</td><td>60,6</td><td>100</td></tr>
+        <tr><td>10</td><td>100</td><td>575</td><td>675</td><td>10</td><td>57,5</td><td>67,5</td><td>130</td></tr>
+      </table></div>
+      <div class="chart" id="ch-tc"></div>
+      <div class="legend"><span><i style="background:var(--muted)"></i>FC — постоянные</span><span><i style="background:var(--c2)"></i>VC — переменные</span><span><i style="background:var(--accent)"></i>TC = FC + VC</span></div>
+      <p class="cap">FC не зависят от выпуска, это горизонтальная линия. TC повторяет форму VC и поднята над ней ровно на 100. VC сначала растут полого, а после 7 тыс. чашек круто вверх: кофемашина одна, бариста мешают друг другу.</p>
+      <div class="chart" id="ch-atc"></div>
+      <div class="legend"><span><i style="background:var(--accent)"></i>ATC — себестоимость чашки</span><span><i style="background:var(--c2)"></i>AVC</span><span><i style="background:var(--bad)"></i>MC — предельные</span><span><i style="background:var(--muted)"></i>AFC</span></div>
+      <p class="cap">MC пересекает AVC и ATC в их минимумах. AVC минимальны при 5 тыс. чашек (35 ₽), себестоимость ATC — при 6 тыс. (52,5 ₽). Дальше каждая следующая тысяча чашек обходится дороже: работает закон убывающей предельной производительности. AFC всё время падают, потому что аренда делится на большее число чашек.</p>
+      <p class="note">Конспект собран по расшифровке и пересказу Контур.Толка. В расшифровке встречаются ошибки распознавания, поэтому сверяйтесь со слайдами.</p>
+    </section>
+  </main>
+
+  <!-- ================= КАРТОЧКИ ================= -->
+  <section id="cards" role="tabpanel" aria-labelledby="tab-cards" hidden>
+    <div class="deckbar" id="decks"></div>
+    <div class="status"><span id="pos">1 / 1</span><span id="score">знаю 0</span></div>
+    <div class="bar"><i id="barfill"></i></div>
+
+    <div id="player">
+      <div class="scene" id="scene" tabindex="0" role="button" aria-label="Перевернуть карточку">
+        <div class="card" id="card">
+          <div class="face front"><div class="tag" id="ftag"></div><div class="q" id="fq"></div><div class="hint">Нажмите, чтобы увидеть ответ</div></div>
+          <div class="face back"><div class="tag" id="btag"></div><div class="a" id="ba"></div></div>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="btn no" id="b-no">Ещё не знаю</button>
+        <button class="btn yes" id="b-yes">Знаю</button>
+      </div>
+      <div class="subcontrols">
+        <button class="btn" id="b-prev">← Назад</button>
+        <button class="btn" id="b-shuffle">Перемешать</button>
+        <button class="btn" id="b-next">Пропустить →</button>
+      </div>
+    </div>
+
+    <div class="done" id="done" hidden>
+      <h2>Колода пройдена</h2>
+      <p id="done-text"></p>
+      <div class="subcontrols">
+        <button class="btn" id="b-repeat">Повторить незнакомые</button>
+        <button class="btn" id="b-restart">Начать заново</button>
+      </div>
+    </div>
+    <p class="keys">С клавиатуры: <kbd>Пробел</kbd> — перевернуть, <kbd>→</kbd> — знаю, <kbd>←</kbd> — не знаю.</p>
+  </section>
+</div>
+
+<script>
+const C = [
+// ---- Лекция 1
+[1,0,"Что такое управленческая экономика?","Применение экономической теории для принятия управленческих решений."],
+[1,0,"Назовите три типа экономических субъектов и их цели","Домохозяйства — потребление (и продажа своих ресурсов, например труда); фирмы — прибыль; государство — социальные функции и правила."],
+[1,0,"Чем микроэкономика отличается от макроэкономики?","Микро изучает отдельных субъектов (цены, спрос, фирма). Макро — экономику как систему: инфляцию, ВВП, ключевую ставку."],
+[1,0,"Что такое институциональная среда?","Совокупность институтов: правил, норм, ограничений и возможностей (законы, деловой этикет)."],
+[1,0,"Теория сигналов: о чём говорит школьная медаль?","Не об уме, а о целеустремлённости и умении дойти до цели. Внешний признак передаёт скрытую информацию."],
+[1,0,"Дайте определение ресурсов","Совокупность материальных благ и услуг, которые можно использовать для производства продукции или оказания услуг."],
+[1,0,"Свободные и экономические ресурсы — в чём разница?","Свободные имеют нулевую цену. Экономические ограничены и покупаются."],
+[1,0,"Назовите 5 факторов производства","Труд, капитал, земля, предпринимательские способности, информация."],
+[1,0,"Что такое «капитал» как фактор производства?","Реальный капитал: здания, сооружения, станки, механизмы. Не деньги."],
+[1,0,"Что такое «земля» в экономике?","Все природные ресурсы, включая климат и территориальное расположение, а не только почва."],
+[1,0,"Что такое информация как ресурс и какими свойствами она должна обладать?","Знание, обладающее новизной и пригодное для решения. Должна быть своевременной, проверенной и понятной."],
+[1,0,"Какой доход приносит каждый фактор?","Труд → зарплата; капитал → процент; земля → рента (аренда); предпринимательство → прибыль (не гарантирована); информация → доход от консалтинга и т. п."],
+[1,0,"Что такое потребность?","Состояние нужды и необходимость его преодолеть: «нет и хочу» или «есть и хочу сохранить»."],
+[1,0,"Первичные и вторичные потребности: пример","Первичная — найти жильё. Вторичные появляются после неё: мебель, посуда. Бизнесу вторичных выгодно партнёрство с продавцами первичных."],
+[1,0,"Неотложные и отсроченные потребности: чем важно для бизнеса?","Неотложную удовлетворяют сразу, клиент не ищет долго. Отсроченную долго выбирают, сравнивают, созваниваются, поэтому путь продажи совсем другой."],
+[1,0,"Что даёт бизнесу пирамида Маслоу?","Чем ниже уровень потребности, тем шире аудитория и проще продать. Верхние уровни (самореализация) — узкая аудитория, которую сложнее найти."],
+[1,0,"Что такое альтернативные издержки?","Ценность лучшей альтернативы, от которой отказываемся при выборе."],
+[1,0,"Что показывает кривая производственных возможностей?","Границу максимального выпуска двух благ при данных ресурсах и технологии. На кривой — эффективно, внутри — ресурсы простаивают, за ней — недостижимо."],
+[1,0,"Три допущения КПВ","Ресурсы ограничены, уровень технологий задан, экономика закрыта."],
+[1,0,"Главное отличие стартапа от классического бизнеса","Стартап — новая идея, неустойчивая модель, нужен взрывной рост (×2, ×3) и инвестиции. Классический бизнес растёт постепенно и стабильно."],
+[1,0,"Структура рынка и инфраструктура рынка","Структура — внутреннее устройство рынка. Инфраструктура — посредники: банки, консалтинг, юристы, фонды, акселераторы."],
+[1,0,"Предприятие и организация: разница","Предприятие — имущественный комплекс для получения прибыли. Организация может работать ради социального эффекта."],
+[1,0,"По каким критериям делят МСП на микро, малые, средние и крупные?","По доходу и численности сотрудников (ФЗ о развитии МСП)."],
+[1,0,"Как классифицируют IT-компании со статусом МТК?","Стартап, ранняя и зрелая компания — по выручке, а не по возрасту."],
+[1,0,"Этапы создания бизнеса","Выбор ОПФ → госрегистрация (с ОКВЭД) → выбор налогового режима → открытие расчётного счёта."],
+[1,0,"Почему лучше начинать с ИП? Каков главный риск ИП?","Меньше требований и проще отчётность. Но ИП отвечает по обязательствам всем своим имуществом."],
+[1,1,"УСН «Доходы»: формула налога","<code>Налог = 6% × Доходы</code>"],
+[1,1,"УСН «Доходы минус расходы»: формула налога","<code>Налог = 15% × (Доходы − Расходы)</code>. Выгоднее при большой доле расходов."],
+[1,1,"При какой доле расходов УСН 15% выгоднее, чем 6%?","<code>0,06·Д = 0,15·(Д − Р) ⇒ Р = 60% Д</code>. Расходы больше 60% доходов — выгоднее 15%."],
+// ---- Лекция 2
+[2,0,"Кто ввёл понятие транзакционных издержек?","Рональд Коуз."],
+[2,0,"Что такое транзакционные издержки?","Издержки, возникающие при заключении любой сделки."],
+[2,0,"От чего зависит величина транзакционных издержек?","От масштаба и сложности сделки, а не от товара. Пакет молока и партия молока для торговой сети — разные издержки."],
+[2,0,"Перечислите виды транзакционных издержек","Поиск информации; спецификация и защита прав собственности; измерение качества; переговоры и заключение контракта; контроль исполнения и защита от оппортунизма."],
+[2,0,"Что такое спецификация прав собственности?","Проверка, кто собственник и уполномочен ли контрагент заключать сделку. Иначе договор могут признать недействительным."],
+[2,0,"Что такое оппортунистическое поведение?","Недобросовестное преследование своих интересов в ущерб другой стороне сделки."],
+[2,0,"Как снизить риск оппортунизма?","Испытательный срок, поэтапные контракты, проверка выполнения обязательств."],
+[2,0,"Нужно ли минимизировать транзакционные издержки до нуля?","Нет. Экономия на проверке (например, документов на квартиру) ведёт к проблемам."],
+[2,0,"Что такое бизнес-план и гарантирует ли он успех?","Документ о способности компании производить и продавать продукцию и об ожидаемой прибыли. Нужен для инвесторов, но успеха не гарантирует."],
+[2,0,"Четыре базовых вопроса бизнеса","Что производить? Где? Для кого? Как?"],
+[2,0,"Чем товар отличается от услуги?","Товар можно хранить. Услуга потребляется в момент оказания."],
+[2,0,"Какие бывают границы рынка?","Продуктовые, географические, институциональные."],
+[2,0,"Что такое УТП и на чём оно строится?","Уникальное торговое предложение. Строится на детальном понимании потребностей клиента и стратегий конкурентов."],
+[2,0,"Что такое социальное предприятие?","Бизнес, который нанимает уязвимые группы, производит товары для них или решает социальные проблемы. Получает льготы."],
+// ---- Лекция 3
+[3,0,"Что такое эффективность?","Максимальный результат при минимальных затратах."],
+[3,0,"Что на самом деле покупает клиент полуфабрикатов?","Экономию времени. Клиент покупает ценность, а не форму продукта."],
+[3,0,"Что такое производственная функция?","Зависимость максимального выпуска от количества используемых ресурсов («рецепт»)."],
+[3,0,"Что такое отдача от масштаба?","Реакция объёма выпуска на изменение всех ресурсов в n раз."],
+[3,0,"Три вида отдачи от масштаба","Постоянная: выпуск растёт в n раз. Возрастающая: больше чем в n раз. Убывающая: меньше чем в n раз."],
+[3,0,"Почему существуют монополии и гиганты (металлургия, автопром)?","Там работает возрастающая отдача от масштаба: при большом выпуске падает себестоимость."],
+[3,0,"Постоянные и переменные факторы производства","Постоянные не зависят от выпуска в течение периода (оборудование, печь). Переменные меняются вместе с выпуском (труд, сырьё)."],
+[3,0,"Чем краткосрочный период отличается от долгосрочного?","Это не календарь. В краткосрочном часть факторов постоянна, в долгосрочном все факторы переменные."],
+[3,0,"Какой фактор переменный в краткосрочном периоде и самый гибкий?","Труд, то есть персонал: смены, временные сотрудники."],
+[3,0,"Общий, средний и предельный продукт: от кого отдача?","TP — от всех, AP — от каждого, MP — от дополнительно нанятого."],
+[3,1,"Формула среднего продукта","<code>AP = TP / L</code>. Пример: 100 ед. / 10 чел. = 10."],
+[3,1,"Формула предельного продукта","<code>MP = ΔTP / ΔL</code>"],
+[3,0,"По какому показателю решают, нанимать ли ещё сотрудника?","По предельному продукту MP."],
+[3,0,"Закон убывающей предельной производительности","При росте переменного фактора и неизменных остальных после некоторой точки отдача от каждой дополнительной единицы снижается."],
+[3,0,"Пример с покраской пола: что происходит при 10 друзьях?","Кистей и краски на всех не хватает, люди мешают и затаптывают свежий пол. MP уходит в минус, TP падает."],
+[3,0,"Почему команды разработчиков не бывают огромными?","Упираются в координацию: ценности, культура, коммуникация."],
+[3,0,"Что такое изокванта?","Линия комбинаций труда и капитала, дающих одинаковый объём выпуска."],
+[3,0,"Что такое изокоста?","Линия комбинаций ресурсов, которые фирма может купить на заданную сумму денег."],
+[3,1,"Формула изокосты и её крайние точки","<code>TC = P<sub>L</sub>·L + P<sub>K</sub>·K</code>. Крайние точки: <code>TC/P<sub>L</sub></code> (только труд) и <code>TC/P<sub>K</sub></code> (только капитал)."],
+[3,0,"Что показывает MRTS?","От скольких единиц капитала нужно отказаться, чтобы увеличить труд на единицу при том же выпуске."],
+[3,1,"Формула MRTS капитала трудом","<code>MRTS<sub>LK</sub> = −ΔK / ΔL = MP<sub>L</sub> / MP<sub>K</sub></code>"],
+[3,0,"Что такое равновесие производителя?","Точка касания изокванты и изокосты, где план выпуска совпадает с бюджетом."],
+[3,1,"Условие равновесия производителя (формула)","<code>MRTS<sub>LK</sub> = P<sub>L</sub> / P<sub>K</sub></code>"],
+[3,0,"Три параметра, которые фиксируют до выбора ресурсов","Качество, сроки, бюджет."],
+[3,0,"Что сделать до масштабирования?","Автоматизировать и наладить процессы. Иначе масштабируются проблемы."],
+// ---- Лекция 4
+[4,0,"Что такое издержки?","Затраты в денежной форме."],
+[4,0,"Что такое точка безубыточности?","Минимальный объём продаж, при котором выручка покрывает все затраты."],
+[4,0,"Стратегические и технические управленческие задачи по издержкам","Стратегические: выбор деятельности, безубыточность, выгодность расширения, эффективность подразделений. Технические: себестоимость единицы."],
+[4,0,"Что такое бухгалтерские издержки?","Явные, внешние: плата за ресурсы, не принадлежащие фирме, подтверждённая документами."],
+[4,0,"Прямые и косвенные издержки — примеры","Прямые: сырьё, материалы, энергия, оплата труда, соцотчисления. Косвенные: администрация, реклама, юристы, аренда, проценты по кредиту."],
+[4,0,"Что такое неявные (внутренние) издержки?","Упущенный доход от собственных ресурсов: своего труда, своего помещения, стартового капитала."],
+[4,0,"Самая частая ошибка начинающего предпринимателя?","Не видеть неявные издержки, например не платить себе зарплату и считать бизнес прибыльным."],
+[4,1,"Из чего складываются экономические издержки?","<code>Экономические = явные + неявные</code>"],
+[4,1,"Бухгалтерская и экономическая прибыль: формулы","<code>Бух. = TR − явные</code><br><code>Экон. = TR − явные − неявные</code>"],
+[4,0,"Что такое постоянные издержки (FC)?","Издержки, не зависящие от объёма выпуска; есть даже при нулевом выпуске (аренда)."],
+[4,0,"Что такое переменные издержки (VC)?","Издержки, которые меняются вместе с объёмом выпуска: сырьё, сдельная зарплата, коммуналка по счётчику."],
+[4,1,"Формула общих издержек","<code>TC = FC + VC</code>"],
+[4,0,"На какие издержки смотреть при расширении производства и почему?","На переменные: после точки убывающей отдачи они резко растут."],
+[4,1,"Средние общие издержки","<code>ATC = TC / Q = AFC + AVC</code> — себестоимость единицы."],
+[4,1,"Средние постоянные и средние переменные издержки","<code>AFC = FC / Q</code>, <code>AVC = VC / Q</code>"],
+[4,0,"Как ведут себя AFC при росте выпуска?","Убывают: постоянные издержки делятся на большее число единиц."],
+[4,0,"Почему себестоимость важнее цены для управления?","Цену часто диктует рынок, а себестоимость — управляемая величина."],
+[4,1,"Формула предельных издержек","<code>MC = ΔTC / ΔQ = ΔVC / ΔQ</code> — прирост затрат на одну дополнительную единицу."],
+[4,0,"Почему MC растут?","Из-за закона убывающей предельной производительности."],
+[4,0,"Что происходит с издержками в долгосрочном периоде?","Все издержки переменные, кривые сглаживаются. Новые фирмы входят на прибыльный рынок и размывают прибыль."],
+[4,0,"Что такое невозвратные издержки?","Затраты, которые нельзя вернуть (регистрация, спецоборудование, вывеска). В решениях их не учитывают."],
+[4,0,"Пример переориентации после неудачи","Игра Glitch → мессенджер Slack; YouDo: развлечения → сервис поиска исполнителей."],
+[4,0,"Четыре принципа работы с издержками","1) Не учитывать невозвратные. 2) Считать экономическую прибыль. 3) Учитывать альтернативные и будущие издержки. 4) Смотреть на долгосрочные средние издержки при выборе масштаба."],
+[4,0,"Три сценария, когда нужен ребрендинг","Юридический запрет на название; разделение аудиторий (премиум и масс-маркет); смена стратегии."],
+[4,1,"Точка безубыточности в штуках (забегая вперёд)","<code>Q = FC / (P − AVC)</code>"],
+// ---- Задачи и примеры
+[1,2,"Доходы ИП 1 000 000 ₽, расходы 700 000 ₽. Какая УСН выгоднее?","15%: налог 45 000 ₽ против 60 000 ₽ по ставке 6%."],
+[1,2,"Кондитерская переходит от 12 к 15 тортам и теряет 36 пирожных. Каковы альтернативные издержки одного торта?","12 пирожных (36 / 3). По мере движения по КПВ они растут."],
+[1,2,"Что означает для бизнеса точка внутри КПВ?","Ресурсы простаивают. Например, арендовали 150 м², а используете 30."],
+[2,2,"Подрядчик взял 100% предоплаты и срывает сроки. Как этого избежать?","Поэтапная оплата (30 / 40 / 30%) и контроль каждого этапа — защита от оппортунизма."],
+[2,2,"Какие транзакционные издержки у покупки квартиры?","Поиск (риэлтор), спецификация прав (выписка ЕГРН, согласие собственников), измерение качества (осмотр), договор (юрист), контроль (безопасный расчёт)."],
+[3,2,"Ресурсы удвоили, выпуск вырос с 40 до 70 тортов. Какая отдача от масштаба?","Убывающая: выпуск вырос в 1,75 раза, меньше чем в 2."],
+[3,2,"10 работников выпускают 100 ед., 11 — 106 ед. Найдите AP и MP одиннадцатого.","AP = 106 / 11 ≈ 9,6; MP = 106 − 100 = 6."],
+[3,2,"Станок заменяет 3 работников. Станок 100 тыс ₽, работник 50 тыс ₽. Что выгоднее?","Станок: 100 тыс вместо 150 тыс за трёх человек. MRTS = 1/3 &lt; P<sub>L</sub>/P<sub>K</sub> = 1/2, значит выгоднее капитал."],
+[3,2,"Бюджет 1 млн ₽, P<sub>L</sub> = 50 тыс, P<sub>K</sub> = 100 тыс. Найдите крайние точки изокосты.","Только люди: 20 человек. Только станки: 10."],
+[3,2,"Пример с покраской пола: почему при 3 кистях четвёртый друг даёт меньше третьего?","Ему не хватает кисти: постоянный фактор фиксирован, и начинает действовать закон убывающей предельной производительности."],
+[4,2,"Выручка 3 млн, явные издержки 2,4 млн, неявные 0,88 млн. Найдите бухгалтерскую и экономическую прибыль.","Бухгалтерская — 600 тыс ₽, экономическая — −280 тыс ₽. По сравнению с альтернативой бизнес невыгоден."],
+[4,2,"FC = 100 тыс ₽, P = 150 ₽, AVC = 50 ₽. Где точка безубыточности?","100 000 / (150 − 50) = 1 000 чашек в месяц."],
+[4,2,"FC = 100, VC = 175 при Q = 5. Найдите TC, ATC, AFC и AVC.","TC = 275; ATC = 55; AFC = 20; AVC = 35."],
+[4,2,"TC при Q = 6 равны 315, при Q = 7 — 370. Чему равны MC?","MC = 370 − 315 = 55."],
+[4,2,"Потрачено 2 млн, доделать стоит 1,5 млн, это принесёт 1 млн. Доделывать?","Нет. 2 млн — невозвратные издержки, их не учитывают, а 1 млн &lt; 1,5 млн."]
+].map((c,i)=>({id:i,d:c[0],f:c[1]===1,e:c[1]===2,q:c[2],a:c[3]}));
+
+const DECKS=[["all","Все"],["1","Лекция 1"],["2","Лекция 2"],["3","Лекция 3"],["4","Лекция 4"],["f","Только формулы"],["e","Задачи"]];
+const KEY="upr-ek-known-v1";
+let known=new Set();
+try{known=new Set(JSON.parse(localStorage.getItem(KEY)||"[]"))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify([...known]))}catch(e){}};
+
+let deck="all", order=[], pos=0;
+const $=id=>document.getElementById(id);
+function pool(){return C.filter(c=>deck==="all"||(deck==="f"?c.f:deck==="e"?c.e:String(c.d)===deck))}
+function build(list,shuffle){
+  order=list.map(c=>c.id);
+  if(shuffle)for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]]}
+  pos=0;render();
+}
+function render(){
+  const p=pool(), k=p.filter(c=>known.has(c.id)).length;
+  $("score").textContent="знаю "+k+" из "+p.length;
+  $("barfill").style.width=(p.length?k/p.length*100:0)+"%";
+  const fin=pos>=order.length;
+  $("player").hidden=fin; $("done").hidden=!fin;
+  if(fin){
+    const left=p.filter(c=>!known.has(c.id)).length;
+    $("pos").textContent=order.length+" / "+order.length;
+    $("done-text").textContent=left?("Осталось незнакомых: "+left+"."):"Вы знаете все карточки этой колоды.";
+    $("b-repeat").hidden=!left; return;
+  }
+  const c=C[order[pos]];
+  $("card").classList.remove("flipped");
+  $("pos").textContent=(pos+1)+" / "+order.length;
+  const kind=c.f?" <b>формула</b>":c.e?" <b>задача</b>":"";
+  const tag="Лекция "+c.d+kind+(known.has(c.id)?" · ✓ знаю":"");
+  $("ftag").innerHTML=tag; $("btag").innerHTML="Ответ"+kind;
+  $("fq").innerHTML=c.q; $("ba").innerHTML=c.a;
+}
+function flip(){$("card").classList.toggle("flipped")}
+function mark(ok){const c=C[order[pos]];if(!c)return;ok?known.add(c.id):known.delete(c.id);save();pos++;render()}
+
+function drawDecks(){
+  $("decks").innerHTML=DECKS.map(([v,l])=>`<button class="chip" data-d="${v}" aria-pressed="${v===deck}">${l}</button>`).join("");
+}
+$("decks").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;deck=b.dataset.d;drawDecks();build(pool(),true)});
+$("scene").addEventListener("click",flip);
+$("b-yes").onclick=()=>mark(true);
+$("b-no").onclick=()=>mark(false);
+$("b-next").onclick=()=>{pos++;render()};
+$("b-prev").onclick=()=>{if(pos>0){pos--;render()}};
+$("b-shuffle").onclick=()=>build(pool(),true);
+$("b-restart").onclick=()=>build(pool(),true);
+$("b-repeat").onclick=()=>build(pool().filter(c=>!known.has(c.id)),true);
+
+document.addEventListener("keydown",e=>{
+  if($("cards").hidden||$("player").hidden)return;
+  if(e.target.closest("button")&&e.key===" ")return;
+  if(e.key===" "||e.key==="Enter"){e.preventDefault();flip()}
+  else if(e.key==="ArrowRight")mark(true);
+  else if(e.key==="ArrowLeft")mark(false);
+});
+
+function show(which){
+  const cards=which==="cards";
+  $("notes").hidden=cards; $("cards").hidden=!cards;
+  $("tab-notes").setAttribute("aria-selected",!cards); $("tab-cards").setAttribute("aria-selected",cards);
+}
+$("tab-notes").onclick=()=>show("notes");
+$("tab-cards").onclick=()=>{show("cards");window.scrollTo(0,0)};
+document.querySelectorAll(".toc a").forEach(a=>a.addEventListener("click",()=>show("notes")));
+
+// ---------- графики: все точки считаются по одной шкале ----------
+function chart(id,o){
+  const el=document.getElementById(id); if(!el)return;
+  const W=360,H=232,L=44,R=40,T=12,B=36,iw=W-L-R,ih=H-T-B,y0=o.ymin||0;
+  const X=x=>+(L+x/o.xmax*iw).toFixed(1), Y=y=>+(T+ih-(y-y0)/(o.ymax-y0)*ih).toFixed(1);
+  const P=a=>a.map(q=>X(q[0])+","+Y(q[1])).join(" ");
+  let s="";
+  o.yt.forEach(v=>{s+=`<line class="g" x1="${L}" x2="${W-R}" y1="${Y(v)}" y2="${Y(v)}"/><text x="${L-6}" y="${Y(v)+4}" text-anchor="end">${v}</text>`});
+  o.xt.forEach(v=>{s+=`<text x="${X(v)}" y="${T+ih+15}" text-anchor="middle">${v}</text>`});
+  (o.polys||[]).forEach(p=>{s+=`<polygon class="pf" points="${P(p)}"/>`});
+  s+=`<line class="ax" x1="${L}" x2="${L}" y1="${T}" y2="${T+ih}"/><line class="ax" x1="${L}" x2="${W-R}" y1="${Y(Math.max(0,y0))}" y2="${Y(Math.max(0,y0))}"/>`;
+  o.series.forEach(se=>{
+    let pts=se.pts;
+    if(se.f){pts=[];for(let i=0;i<=80;i++){const x=se.x0+(se.x1-se.x0)*i/80;pts.push([x,se.f(x)])}}
+    s+=`<polyline class="ln c-${se.c}${se.dash?" dash":""}" points="${P(pts)}"/>`;
+    if(se.dots)pts.forEach(q=>{s+=`<circle class="d-${se.c}" cx="${X(q[0])}" cy="${Y(q[1])}" r="2.6"/>`});
+    if(se.label){const q=se.lp||pts[pts.length-1];s+=`<text class="sl t-${se.c}" x="${X(q[0])+5}" y="${Y(q[1])+4}">${se.label}</text>`}
+  });
+  (o.points||[]).forEach(p=>{s+=`<circle class="pt d-${p.c}" cx="${X(p.x)}" cy="${Y(p.y)}" r="4.5"/><text class="pl" x="${X(p.x)+(p.dx??7)}" y="${Y(p.y)+(p.dy??-7)}">${p.t}</text>`});
+  s+=`<text x="${W-R}" y="${H-3}" text-anchor="end">${o.xl}</text><text transform="translate(11 ${T+ih/2}) rotate(-90)" text-anchor="middle">${o.yl}</text>`;
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${o.title}">${s}</svg>`;
+}
+const rng=(a,b)=>{const r=[];for(let i=a;i<=b;i++)r.push(i);return r};
+// КПВ
+chart("ch-kpv",{title:"Кривая производственных возможностей",xmax:16,ymax:66,xt:[0,3,6,9,12,15],yt:[0,12,24,36,48,60],xl:"торты, шт/день",yl:"пирожные",
+  series:[{f:x=>60*Math.sqrt(Math.max(0,1-(x/15)**2)),x0:0,x1:15,c:"acc",label:"КПВ",lp:[10.6,46]}],
+  points:[{x:9,y:48,t:"A",c:"acc"},{x:12,y:36,t:"B",c:"acc"},{x:6,y:25,t:"N",c:"c2"},{x:12,y:50,t:"M",c:"bad"}]});
+// Покраска пола
+const TP=[0,8,21,35,44,49,50,48,43];
+chart("ch-tp",{title:"Общий продукт",xmax:8,ymax:56,xt:rng(0,8),yt:[0,10,20,30,40,50],xl:"друзей, L",yl:"TP, м²",
+  series:[{pts:TP.map((v,i)=>[i,v]),c:"acc",dots:true,label:"TP"}],
+  points:[{x:6,y:50,t:"весь пол",c:"acc",dx:-26,dy:-9}]});
+const MP=TP.slice(1).map((v,i)=>[i+1,v-TP[i]]), AP=TP.slice(1).map((v,i)=>[i+1,v/(i+1)]);
+chart("ch-apmp",{title:"Средний и предельный продукт",xmax:8,ymin:-6,ymax:16,xt:rng(0,8),yt:[-5,0,5,10,15],xl:"друзей, L",yl:"м² на друга",
+  series:[{pts:AP,c:"c2",dots:true,label:"AP"},{pts:MP,c:"bad",dots:true,label:"MP"}],
+  points:[{x:3,y:14,t:"max MP",c:"bad",dx:-20,dy:-9}]});
+// Изокванта и изокоста
+const isoq=(k,a)=>({f:L=>k/L,x0:a,x1:22});
+chart("ch-iso",{title:"Изокванта и изокоста",xmax:22,ymax:12,xt:[0,5,10,15,20],yt:[0,2,4,6,8,10],xl:"труд L, чел.",yl:"капитал K, станков",
+  polys:[[[0,0],[0,10],[20,0]]],
+  series:[{pts:[[0,10],[20,0]],c:"ink",label:"TC",lp:[19,1.2]},{...isoq(24,2.1),c:"mut",dash:true,label:"Q₁"},{...isoq(50,4.3),c:"acc",label:"Q₂"},{...isoq(98,8.3),c:"mut",dash:true,label:"Q₃"}],
+  points:[{x:10,y:5,t:"E (10; 5)",c:"acc",dx:6,dy:-8}]});
+// Издержки кофейни
+const VC=[0,50,90,120,145,175,215,270,345,445,575];
+chart("ch-tc",{title:"Постоянные, переменные и общие издержки",xmax:10,ymax:700,xt:rng(0,10),yt:[0,100,200,300,400,500,600,700],xl:"Q, тыс. чашек",yl:"тыс ₽",
+  series:[{pts:[[0,100],[10,100]],c:"mut",label:"FC"},{pts:VC.map((v,i)=>[i,v]),c:"c2",dots:true,label:"VC"},{pts:VC.map((v,i)=>[i,v+100]),c:"acc",dots:true,label:"TC"}]});
+const q1=rng(1,10);
+chart("ch-atc",{title:"Средние и предельные издержки",xmax:10,ymax:160,xt:rng(0,10),yt:[0,25,50,75,100,125,150],xl:"Q, тыс. чашек",yl:"₽ за чашку",
+  series:[{pts:q1.map(q=>[q,100/q]),c:"mut",dash:true,label:"AFC"},{pts:q1.map(q=>[q,VC[q]/q]),c:"c2",dots:true,label:"AVC"},{pts:q1.map(q=>[q,(VC[q]+100)/q]),c:"acc",dots:true,label:"ATC"},{pts:q1.map(q=>[q,VC[q]-VC[q-1]]),c:"bad",dots:true,label:"MC"}],
+  points:[{x:5,y:35,t:"min AVC",c:"c2",dx:-22,dy:16},{x:6,y:52.5,t:"min ATC",c:"acc",dx:-24,dy:-10}]});
+
+drawDecks(); build(pool(),true);
+if(location.hash==="#cards")show("cards");
+</script>
+
+</body>
+</html>
